@@ -1,0 +1,100 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Explore BASE6 rooms with a local 360 degree viewer and create a room layout.">
+  <title>BASE6 — 360 View & Room Layout Generator</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <header class="topbar">
+    <div>
+      <a class="back-link" href="index.html">← Back to BASE6</a>
+      <p class="eyebrow">Visual workspace</p>
+      <h1>360 View & Room Layout Generator</h1>
+    </div>
+    <div class="admin-actions">
+      <a class="back-link" href="index.html">View public site</a>
+      <button id="logout" class="button secondary" type="button">Log out</button>
+      <button id="clearAll" class="button secondary" type="button">Reset</button>
+    </div>
+  </header>
+
+  <main class="app-grid">
+    <section class="card">
+      <div class="section-heading">
+        <div>
+          <p class="eyebrow">Product preview</p>
+          <h2>360° viewer</h2>
+        </div>
+        <span id="frameCount" class="badge">0 frames</span>
+      </div>
+      <label class="room-selector">Set 360 view and layout for
+        <select id="roomTarget" aria-label="Room image to configure">
+          <option value="room-wide">Room 1 · Twin residence</option>
+          <option value="room-twin">Room 2 · Balcony twin</option>
+          <option value="room-study">Room 3 · Study-focused room</option>
+        </select>
+      </label>
+      <img id="roomTargetImage" class="room-target-image" alt="Selected room image">
+
+      <div id="viewer" class="viewer empty">
+        <div class="empty-state">
+          <span class="empty-icon">↻</span>
+          <p>Upload a sequence of room or product photos to create a 360° view.</p>
+        </div>
+        <img id="viewImage" alt="360 degree product preview">
+      </div>
+      <div class="viewer-controls">
+        <button id="prevFrame" class="icon-button" type="button" aria-label="Previous frame">←</button>
+        <input id="frameSlider" type="range" min="0" max="0" value="0" aria-label="360 frame">
+        <button id="nextFrame" class="icon-button" type="button" aria-label="Next frame">→</button>
+      </div>
+      <label class="dropzone" for="frameInput">
+        <strong>Drop product images here</strong>
+        <span>or click to choose multiple JPG, PNG, or WebP files</span>
+        <input id="frameInput" type="file" accept="image/*" multiple>
+      </label>
+      <p class="hint">Drag on the preview to rotate. Uploaded frames are saved with this room when you publish.</p>
+    </section>
+
+    <section class="card layout-card">
+      <div class="section-heading">
+        <div>
+          <p class="eyebrow">Interior planning</p>
+          <h2>Room layout generator</h2>
+        </div>
+        <button id="downloadLayout" class="button primary" type="button">Download PNG</button>
+      </div>
+      <div class="layout-toolbar">
+        <label>Room size
+          <select id="roomSize">
+            <option value="small">Small · 12 × 10 ft</option>
+            <option value="medium" selected>Medium · 16 × 12 ft</option>
+            <option value="large">Large · 20 × 16 ft</option>
+          </select>
+        </label>
+        <label>Style
+          <select id="roomStyle">
+            <option value="modern">Modern</option>
+            <option value="warm">Warm</option>
+            <option value="minimal">Minimal</option>
+          </select>
+        </label>
+        <button id="generateLayout" class="button secondary" type="button">Generate layout</button>
+        <button id="saveLayout" class="button primary" type="button">Save to public site</button>
+      </div>
+      <div class="canvas-wrap">
+        <canvas id="layoutCanvas" width="900" height="560" aria-label="Room layout canvas"></canvas>
+      </div>
+      <div class="furniture-list" id="furnitureList"></div>
+      <button id="removeFurniture" class="remove-button" type="button">Remove selected item</button>
+      <p class="hint">Drag any icon on the canvas to move it. Select an item and use Remove, Delete, or Backspace to delete it.</p>
+      <p id="saveStatus" class="save-status" role="status"></p>
+    </section>
+  </main>
+  <script src="app.js"></script>
+  <script src="admin.js"></script>
+</body>
+</html>

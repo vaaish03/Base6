@@ -1,0 +1,29 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>BASE6 — Admin Login</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body class="login-page">
+  <main class="login-card">
+    <a class="back-link" href="index.html">← Back to BASE6</a>
+    <p class="eyebrow">Private dashboard</p>
+    <h1>BASE6 admin login</h1>
+    <p class="login-copy">Sign in to edit the room layout and publish the latest arrangement to the public site.</p>
+    <form id="loginForm" autocomplete="off">
+      <label>Username
+        <input id="username" autocomplete="username" required>
+      </label>
+      <label>Password
+        <input id="password" type="password" autocomplete="current-password" required>
+      </label>
+      <button class="button primary" type="submit">Sign in</button>
+      <p id="loginError" class="login-error" role="alert"></p>
+    </form>
+    <p class="hint">Demo login: <strong>admin</strong> / <strong>BASE6@2026</strong></p>
+  </main>
+  <script src="admin-login.js"></script>
+</body>
+</html>

@@ -1,0 +1,347 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="BASE6 Engineering Residence — a small, mentored residence for first-year engineering students in Dhankawadi, Pune.">
+  <title>BASE6 — Engineering Residence</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Manrope:wght@600;700;800&display=swap" rel="stylesheet">
+  <style>
+    :root{
+      --ink:#10243a; --ink2:#18334f; --cream:#f8f4eb; --paper:#fffdf8;
+      --yellow:#f4c84b; --yellow2:#ffe39a; --muted:#647282; --line:#e7dfd1;
+      --green:#c9d8bf; --radius:28px; --shadow:0 20px 60px rgba(16,36,58,.10);
+    }
+    *{box-sizing:border-box}
+    html{scroll-behavior:smooth}
+    body{margin:0;background:var(--cream);color:var(--ink);font-family:"DM Sans",sans-serif;line-height:1.55}
+    a{color:inherit;text-decoration:none}
+    img{max-width:100%;display:block}
+    .wrap{width:min(1180px,92%);margin:auto}
+    .nav{position:sticky;top:0;z-index:50;background:rgba(248,244,235,.88);backdrop-filter:blur(16px);border-bottom:1px solid rgba(231,223,209,.8)}
+    .navin{height:76px;display:flex;align-items:center;justify-content:space-between}
+    .logo{font-family:Manrope;font-weight:800;letter-spacing:-.08em;font-size:28px}
+    .logo span{color:#c39b22}
+    .links{display:flex;gap:28px;font-size:14px;font-weight:600;color:#526173}
+    .links a:hover{color:var(--ink)}
+    .navcta{background:var(--ink);color:white;padding:12px 18px;border-radius:999px;font-weight:700;font-size:13px}
+    .hero{padding:74px 0 80px;overflow:hidden}
+    .heroGrid{display:grid;grid-template-columns:1.02fr .98fr;gap:60px;align-items:center}
+    .eyebrow{display:inline-flex;gap:9px;align-items:center;background:#fff8dc;border:1px solid #f0dda0;padding:8px 13px;border-radius:999px;font-size:12px;font-weight:800;letter-spacing:.05em;text-transform:uppercase}
+    .dot{width:8px;height:8px;border-radius:50%;background:#d7aa22}
+    h1{font-family:Manrope;font-size:clamp(48px,7vw,88px);line-height:.95;letter-spacing:-.075em;margin:22px 0 20px}
+    h1 em{font-style:normal;position:relative;display:inline-block}
+    h1 em:after{content:"";position:absolute;height:10px;background:var(--yellow);left:2px;right:2px;bottom:4px;z-index:-1;border-radius:20px;transform:rotate(-1.5deg)}
+    .lead{font-size:20px;max-width:590px;color:#536273}
+    .heroBtns{display:flex;gap:12px;flex-wrap:wrap;margin-top:28px}
+    .btn{display:inline-flex;align-items:center;justify-content:center;padding:14px 21px;border-radius:999px;font-weight:800;font-size:14px;transition:.25s transform,.25s box-shadow}
+    .btn:hover{transform:translateY(-2px);box-shadow:0 10px 25px rgba(16,36,58,.13)}
+    .primary{background:var(--ink);color:white}.secondary{background:white;border:1px solid var(--line)}
+    .facts{display:flex;gap:28px;margin-top:36px;flex-wrap:wrap}
+    .fact strong{display:block;font-family:Manrope;font-size:22px}.fact span{font-size:12px;color:var(--muted)}
+    .heroPhoto{position:relative}
+    .heroPhoto img{height:610px;width:100%;object-fit:cover;border-radius:36px;box-shadow:var(--shadow)}
+    .photoTag{position:absolute;left:-18px;bottom:28px;background:white;border-radius:20px;padding:15px 18px;box-shadow:0 14px 35px rgba(16,36,58,.16);font-size:13px;font-weight:800}
+    section{padding:95px 0}
+    .sectionHead{display:flex;justify-content:space-between;align-items:end;gap:30px;margin-bottom:38px}
+    .kicker{font-size:12px;text-transform:uppercase;letter-spacing:.14em;font-weight:800;color:#a78321}
+    h2{font-family:Manrope;font-size:clamp(34px,5vw,55px);line-height:1.02;letter-spacing:-.055em;margin:8px 0 0}
+    .sub{max-width:470px;color:var(--muted)}
+    .idea{background:var(--ink);color:white;border-radius:36px;padding:58px;position:relative;overflow:hidden}
+    .idea:before{content:"6";position:absolute;right:-10px;top:-55px;font:800 280px/1 Manrope;color:rgba(255,255,255,.045)}
+    .ideaGrid{display:grid;grid-template-columns:1.2fr .8fr;gap:60px;align-items:end}
+    .idea h2{max-width:650px}.idea p{color:#c9d3df;max-width:650px;font-size:18px}
+    .pillars{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;position:relative;z-index:1}
+    .pillar{background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.12);padding:18px;border-radius:20px}
+    .pillar b{display:block;font-size:20px;margin-bottom:5px}.pillar span{font-size:12px;color:#bac7d4}
+    .gallery{display:grid;grid-template-columns:1.25fr .75fr;gap:18px}
+    .gallery img{width:100%;height:100%;object-fit:cover;border-radius:28px;cursor:pointer;transition:.25s transform,.25s box-shadow}
+    .gallery img:hover{transform:translateY(-4px);box-shadow:0 16px 30px rgba(16,36,58,.16)}
+    .gallery .big{height:610px}.gallery .small{height:296px}
+    .stack{display:grid;grid-template-rows:1fr 1fr;gap:18px}
+    .caption{margin-top:13px;color:var(--muted);font-size:13px}
+    .features{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
+    .feature{background:var(--paper);border:1px solid var(--line);padding:22px;border-radius:22px;transition:.25s transform}
+    .feature:hover{transform:translateY(-3px)}
+    .icon{width:40px;height:40px;border-radius:13px;background:#fff0b9;display:grid;place-items:center;margin-bottom:15px;font-size:19px}
+    .feature b{display:block;margin-bottom:5px}.feature span{font-size:13px;color:var(--muted)}
+    .notice{margin-top:18px;background:#dce8d4;border-radius:26px;padding:28px;display:flex;justify-content:space-between;align-items:center;gap:20px}
+    .notice strong{font-family:Manrope;font-size:25px}.notice span{color:#52634b;font-size:13px}
+    .mentor{background:#efe8dc}
+    .mentorCard{background:var(--paper);border:1px solid var(--line);border-radius:32px;padding:42px;display:grid;grid-template-columns:.35fr 1fr;gap:42px;align-items:center}
+    .initial{width:150px;height:150px;border-radius:50%;background:var(--yellow2);display:grid;place-items:center;font:800 58px Manrope;color:var(--ink)}
+    .mentorPhoto{width:150px;height:150px;border-radius:50%;object-fit:cover;object-position:center top;box-shadow:0 14px 30px rgba(16,36,58,.14);border:6px solid white}
+    .mentorName{font:800 38px/1 Manrope;letter-spacing:-.05em;margin-bottom:12px}
+    .tags{display:flex;gap:8px;flex-wrap:wrap;margin:18px 0}
+    .tag{background:#f0ece3;border-radius:999px;padding:8px 11px;font-size:12px;font-weight:700}
+    .owners{display:grid;grid-template-columns:repeat(2,1fr);gap:18px}
+    .owner{background:var(--paper);border:1px solid var(--line);border-radius:28px;padding:28px;min-height:220px}
+    .ownerTop{display:flex;align-items:center;gap:15px;margin-bottom:22px}
+    .avatar{width:58px;height:58px;border-radius:18px;background:var(--yellow2);display:grid;place-items:center;font-weight:800;font-size:20px}
+    .owner h3{margin:0;font-family:Manrope}.owner small{color:var(--muted)}
+    .owner p{font-size:14px;color:var(--muted)}
+    .location{background:var(--ink);color:white;border-radius:36px;padding:55px}
+    .locationGrid{display:grid;grid-template-columns:1fr 1fr;gap:50px;align-items:center}
+    .location p{color:#c9d3df}.address{font-size:22px;font-weight:700;margin:22px 0}
+    .location .heroBtns{margin-top:14px}.location .heroBtns .btn{background:#18334f!important;color:white;border:1px solid rgba(255,255,255,.28)}
+    .location .heroBtns .btn:hover{background:#244968!important}
+    .mapbox{height:300px;border-radius:26px;position:relative;overflow:hidden;border:1px solid rgba(255,255,255,.14);box-shadow:0 18px 38px rgba(0,0,0,.18)}
+    .mapbox iframe{width:100%;height:100%;border:0;display:block;filter:saturate(.9) contrast(1.1)}
+    .pin{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);background:var(--ink);color:white;border-radius:999px;padding:13px 17px;font-weight:800;box-shadow:0 10px 30px rgba(0,0,0,.2);pointer-events:none;z-index:2}
+    .pricing{display:grid;grid-template-columns:1fr .75fr;gap:20px}
+    .priceCard,.visitCard{border-radius:32px;padding:45px;border:1px solid var(--line);background:var(--paper)}
+    .price{font:800 64px/1 Manrope;letter-spacing:-.06em;margin:15px 0 6px}
+    .price small{font:600 15px "DM Sans";letter-spacing:0;color:var(--muted)}
+    .limited{display:inline-block;background:#fff0b9;padding:8px 12px;border-radius:999px;font-size:12px;font-weight:800}
+    .visitCard{background:var(--yellow);border-color:transparent}
+    .visitCard h3{font:800 34px/1.05 Manrope;letter-spacing:-.04em;margin:0 0 12px}
+    .room-modal{position:fixed;inset:0;z-index:100;display:none;place-items:center;padding:20px;background:rgba(8,25,42,.72);backdrop-filter:blur(8px)}
+    .room-modal.open{display:grid}
+    .room-modal-card{width:min(1100px,100%);max-height:92vh;overflow:auto;background:var(--paper);border-radius:28px;padding:28px;box-shadow:0 25px 80px rgba(0,0,0,.3)}
+    .room-modal-head{display:flex;align-items:start;justify-content:space-between;gap:20px;margin-bottom:20px}
+    .room-modal-head h2{font-size:clamp(28px,4vw,44px)}
+    .modal-close{border:0;background:#f0ece3;color:var(--ink);width:40px;height:40px;border-radius:50%;font-size:24px;cursor:pointer}
+    .room-modal-grid{display:grid;grid-template-columns:1fr 1fr;gap:22px}
+    .modal-viewer{position:relative;display:grid;place-items:center;min-height:360px;border-radius:20px;background:#edf1f4;overflow:hidden}
+    .modal-viewer img{width:100%;height:360px;object-fit:cover;user-select:none;cursor:grab}
+    .modal-viewer img:active{cursor:grabbing}
+    .modal-arrow{position:absolute;top:50%;transform:translateY(-50%);z-index:2;border:0;background:rgba(16,36,58,.78);color:#fff;width:38px;height:38px;border-radius:50%;font-size:22px;cursor:pointer}
+    .modal-arrow.prev{left:12px}.modal-arrow.next{right:12px}
+    .modal-frame-label{position:absolute;left:50%;bottom:12px;transform:translateX(-50%);padding:6px 11px;border-radius:999px;background:rgba(255,255,255,.9);font-size:12px;font-weight:800}
+    .modal-thumbs{display:flex;gap:8px;margin-top:10px}
+    .modal-thumbs button{padding:0;border:2px solid transparent;border-radius:10px;overflow:hidden;background:none;cursor:pointer}
+    .modal-thumbs button.active{border-color:var(--yellow)}
+    .modal-thumbs img{width:70px;height:48px;object-fit:cover}
+    .modal-layout-wrap{padding:14px;border-radius:20px;background:#eef0f7}
+    .modal-layout-wrap canvas{width:100%;height:auto;border-radius:14px;background:#fff}
+    .modal-note{margin:10px 0 0;color:var(--muted);font-size:13px}
+    footer{padding:45px 0;background:#0b1b2b;color:#c6d0da}
+    .foot{display:flex;justify-content:space-between;gap:20px;align-items:center}.foot b{color:white;font-family:Manrope;font-size:25px}
+    .tiny{font-size:12px;color:#8e9baa}
+    @media(max-width:850px){
+      .links{display:none}.hero{padding-top:45px}.heroGrid,.ideaGrid,.locationGrid,.pricing{grid-template-columns:1fr}
+      .heroPhoto img{height:430px}.photoTag{left:12px}.pillars{grid-template-columns:1fr 1fr}
+      .gallery{grid-template-columns:1fr}.gallery .big{height:430px}.gallery .small{height:250px}
+      .features{grid-template-columns:1fr 1fr}.mentorCard{grid-template-columns:1fr;padding:30px}.initial{width:100px;height:100px;font-size:40px}
+      .owners{grid-template-columns:1fr}.location{padding:35px}.sectionHead{display:block}
+    }
+    @media(max-width:520px){
+      .navcta{padding:10px 14px}.heroBtns .btn{width:100%}.facts{gap:20px}
+      .idea,.location{border-radius:26px;padding:28px}.pillars{grid-template-columns:1fr}.features{grid-template-columns:1fr}
+      .priceCard,.visitCard{padding:30px}.price{font-size:48px}.foot{display:block}
+    }
+  </style>
+</head>
+<body>
+  <nav class="nav">
+    <div class="wrap navin">
+      <a class="logo" href="#top">BASE<span>6</span></a>
+      <div class="links">
+        <a href="#about">Why BASE6</a><a href="#rooms">Residence</a><a href="#support">Support</a><a href="#mentor">Mentor</a><a href="#location">Location</a><a href="admin.html">Admin</a>
+      </div>
+      <a class="navcta" href="https://wa.me/919881121306?text=hi%20i%20want%20to%20book%20an%20appointment" target="_blank" rel="noopener">Book a Visit</a>
+    </div>
+  </nav>
+
+  <main id="top">
+    <section class="hero">
+      <div class="wrap heroGrid">
+        <div>
+          <div class="eyebrow"><span class="dot"></span> Engineering Residence · Pune</div>
+          <h1>A home to <em>grow</em>, not just stay.</h1>
+          <p class="lead">A thoughtfully designed residence for first-year engineering students — small, focused, comfortable, and mentored.</p>
+          <div class="heroBtns">
+            <a class="btn primary" href="#rooms">Explore BASE6 ↓</a>
+            <a class="btn secondary" href="tel:9881121306">Call 9881121306</a>
+          </div>
+          <div class="facts">
+            <div class="fact"><strong>06</strong><span>total seats</span></div>
+            <div class="fact"><strong>02</strong><span>students / room</span></div>
+            <div class="fact"><strong>1.8 km</strong><span>from PICT back gate</span></div>
+          </div>
+        </div>
+        <div class="heroPhoto">
+          <img src="assets/base6-room-wide.jpeg" alt="Bright BASE6 student bedroom with two study desks and beds">
+          <div class="photoTag">Your space. Your people. Your pace.</div>
+        </div>
+      </div>
+    </section>
+
+    <section id="about">
+      <div class="wrap">
+        <div class="idea">
+          <div class="ideaGrid">
+            <div>
+              <div class="kicker">The BASE6 idea</div>
+              <h2>More than a room. It's your space to become.</h2>
+              <p>BASE6 is built around a deliberately small peer group. Instead of a crowded hostel experience, residents get a calmer home environment where study, friendships, independence and guidance can coexist.</p>
+            </div>
+            <div class="pillars">
+              <div class="pillar"><b>Belong</b><span>Find your people.</span></div>
+              <div class="pillar"><b>Aspire</b><span>Think beyond classes.</span></div>
+              <div class="pillar"><b>Strive</b><span>Build your rhythm.</span></div>
+              <div class="pillar"><b>Evolve</b><span>Grow every day.</span></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="rooms">
+      <div class="wrap">
+        <div class="sectionHead">
+          <div><div class="kicker">Rooms & residence</div><h2>Designed for real student life.</h2></div>
+          <p class="sub">Clean interiors, generous daylight, dedicated study spaces and a calm palette that makes the residence feel like home.</p>
+        </div>
+        <div class="gallery">
+          <img class="big room-photo" data-room="room-wide" src="assets/base6-room-wide.jpeg" alt="BASE6 residence interior with twin beds and study desks" tabindex="0" role="button" aria-label="Open room wide 360 view and layout">
+          <div class="stack">
+            <img class="small room-photo" data-room="room-twin" src="assets/base6-room-twin.jpeg" alt="BASE6 twin bedroom with wardrobes and balcony" tabindex="0" role="button" aria-label="Open twin room 360 view and layout">
+            <img class="small room-photo" data-room="room-study" src="assets/base6-room-wide.jpeg" alt="BASE6 room and study area" tabindex="0" role="button" aria-label="Open study room 360 view and layout">
+          </div>
+        </div>
+        <div class="caption">Residence photography supplied for BASE6. More facility photos can be added to this gallery.</div>
+      </div>
+    </section>
+
+    <section id="support">
+      <div class="wrap">
+        <div class="sectionHead">
+          <div><div class="kicker">Everything handled</div><h2>Less life-admin. More living.</h2></div>
+          <p class="sub">The everyday essentials are covered so residents can spend more time studying, building projects and enjoying college.</p>
+        </div>
+        <div class="features">
+          <div class="feature"><div class="icon">⌁</div><b>High-speed Wi-Fi</b><span>Reliable connectivity for classes, projects and entertainment.</span></div>
+          <div class="feature"><div class="icon">✦</div><b>Dedicated project space</b><span>A place to work on ideas without taking over your bedroom.</span></div>
+          <div class="feature"><div class="icon">⌂</div><b>Daily housekeeping</b><span>Cleaning handled so your routine stays simple.</span></div>
+          <div class="feature"><div class="icon">⚡</div><b>Power backup</b><span>Keep your study and work moving when power cuts happen.</span></div>
+          <div class="feature"><div class="icon">◌</div><b>RO + hot water</b><span>Daily essentials, ready when you need them.</span></div>
+          <div class="feature"><div class="icon">▣</div><b>Kitchen essentials</b><span>Induction cooktop, fridge and microwave.</span></div>
+          <div class="feature"><div class="icon">↻</div><b>Washing machine</b><span>One less recurring chore to worry about.</span></div>
+          <div class="feature"><div class="icon">◎</div><b>Gym + basketball</b><span>Space to move, reset and stay active.</span></div>
+          <div class="feature"><div class="icon">◈</div><b>Security + parking</b><span>A comfortable, secure residence environment.</span></div>
+        </div>
+        <div class="notice"><div><strong>NO ELECTRICITY BILL</strong><br><span>NO SOCIETY CHARGES</span></div><a class="btn primary" href="tel:9881121306">Ask about availability</a></div>
+      </div>
+    </section>
+
+    <section class="mentor" id="mentor">
+      <div class="wrap">
+        <div class="sectionHead">
+          <div><div class="kicker">Guidance that matters</div><h2>Mentored by a PICTian.</h2></div>
+          <p class="sub">A residence with access to experience, not just amenities.</p>
+        </div>
+        <div class="mentorCard">
+          <img class="mentorPhoto" src="assets/kishor-bachhav.png" alt="Portrait of Kishor Bachhav">
+          <div>
+            <div class="mentorName">Kishor Bachhav</div>
+            <div class="tags"><span class="tag">PICT Alumnus</span><span class="tag">20+ Years in Engineering</span><span class="tag">Technology Leader</span><span class="tag">Visiting Faculty</span><span class="tag">Author</span></div>
+            <p>Personally present at BASE6 through the working day, offering students an experienced point of contact for guidance, everyday support and the transition into engineering life.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="owners">
+      <div class="wrap">
+        <div class="sectionHead">
+          <div><div class="kicker">Meet the owners</div><h2>A residence run by people who care.</h2></div>
+          <p class="sub">Owner profiles can be personalized with names, photographs, professions and short introductions once those details are provided.</p>
+        </div>
+        <div class="owners">
+          <article class="owner">
+            <div class="ownerTop"><div class="avatar">01</div><div><h3>Owner Profile</h3><small>Details to be added</small></div></div>
+            <p>Add the owner's name, background, role at BASE6 and a short personal introduction here. A portrait can replace the numbered avatar.</p>
+          </article>
+          <article class="owner">
+            <div class="ownerTop"><div class="avatar">02</div><div><h3>Owner Profile</h3><small>Details to be added</small></div></div>
+            <p>Add the second owner's name, background, role at BASE6 and a short personal introduction here. A portrait can replace the numbered avatar.</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section id="location">
+      <div class="wrap">
+        <div class="location">
+          <div class="locationGrid">
+            <div>
+              <div class="kicker" style="color:#f4c84b">Come see the place</div>
+              <h2>Close to campus.<br>Feels far from chaos.</h2>
+              <p>Conveniently located for PICT students, with a residence setup designed around everyday student life.</p>
+              <div class="address">807, Bhargav Stella,<br>Dhankawadi, Pune</div>
+              <p><strong>Shortest route from BASE6 to PICT</strong></p>
+              <div class="heroBtns">
+                <a class="btn" href="https://www.google.com/maps/dir/Bhargav+Stella/SCTR'S+Pune+Institute+of+Computer+Technology/data=!4m2!4m1!3e0" target="_blank" rel="noopener">Driving Route ↗</a>
+                <a class="btn secondary" href="https://maps.app.goo.gl/USDAcSkhqKwqDrpEA" target="_blank" rel="noopener">Walking Route ↗</a>
+              </div>
+            </div>
+            <div class="mapbox">
+              <iframe
+                src="https://www.google.com/maps?q=18.4635823,73.853977&z=15&output=embed"
+                loading="lazy"
+                referrerpolicy="no-referrer-when-downgrade"
+                allowfullscreen
+                title="BASE6 location map">
+              </iframe>
+              <div class="pin">Shortest route · BASE6 → PICT</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="pricing">
+      <div class="wrap">
+        <div class="pricing">
+          <div class="priceCard">
+            <span class="limited">ONLY 6 SEATS</span>
+            <div class="price">₹14,999 <small>/ person / month</small></div>
+            <p class="sub">Ask the owners for the latest availability and exact inclusions before booking.</p>
+            <a class="btn primary" href="tel:9881121306">Call 9881121306</a>
+          </div>
+          <div class="visitCard">
+            <h3>Don't just book a room. Come see your future home.</h3>
+            <p>Meet the owners. Walk through the residence. Ask questions. Get a feel for BASE6.</p>
+            <a class="btn primary" href="https://wa.me/919881121306?text=hi%20i%20want%20to%20book%20an%20appointment" target="_blank" rel="noopener">Book a Visit →</a>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="wrap foot">
+      <div><b>BASE6</b><div class="tiny">Engineering Residence · Pune</div></div>
+      <div class="tiny">Belong · Aspire · Strive · Evolve</div>
+    </div>
+  </footer>
+  <div id="roomModal" class="room-modal" role="dialog" aria-modal="true" aria-labelledby="modalRoomTitle">
+    <div class="room-modal-card">
+      <div class="room-modal-head">
+        <div><div class="kicker">Room details</div><h2 id="modalRoomTitle">Room preview</h2></div>
+        <button id="closeRoomModal" class="modal-close" type="button" aria-label="Close room preview">×</button>
+      </div>
+      <div class="room-modal-grid">
+        <div>
+          <div id="modalViewer" class="modal-viewer">
+            <button id="modalPrev" class="modal-arrow prev" type="button" aria-label="Previous room view">←</button>
+            <img id="modalImage" alt="">
+            <button id="modalNext" class="modal-arrow next" type="button" aria-label="Next room view">→</button>
+            <span id="modalFrameLabel" class="modal-frame-label"></span>
+          </div>
+          <div id="modalThumbs" class="modal-thumbs"></div>
+          <p class="modal-note">Drag the image or use the arrows to explore this room's 360° views.</p>
+        </div>
+        <div>
+          <div class="modal-layout-wrap"><canvas id="modalLayoutCanvas" width="700" height="420" aria-label="Selected room layout"></canvas></div>
+          <p id="modalLayoutNote" class="modal-note"></p>
+        </div>
+      </div>
+    </div>
+  </div>
+  <script src="room-gallery.js"></script>
+</body>
+</html>
