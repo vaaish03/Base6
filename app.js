@@ -7,6 +7,8 @@ const frameSlider = $("frameSlider");
 const frameCount = $("frameCount");
 const roomTarget = $("roomTarget");
 const roomTargetImage = $("roomTargetImage");
+const pgImageInput = $("pgImageInput");
+const pgImagePreview = $("pgImagePreview");
 const ROOM_CONFIGS_KEY = "base6RoomLayouts";
 const roomOptions = {
   "room-wide": { image: "assets/base6-room-wide.jpeg" },
@@ -17,6 +19,17 @@ let frames = [];
 let frameIndex = 0;
 let dragStartX = null;
 let frameObjectUrls = [];
+let pgFiles = [];
+
+function renderPgPreview() {
+  pgImagePreview.replaceChildren(...pgFiles.map((file) => {
+    const image = document.createElement("img");
+    image.src = URL.createObjectURL(file);
+    image.alt = file.name;
+    image.onload = () => URL.revokeObjectURL(image.src);
+    return image;
+  }));
+}
 
 function renderFrame(index) {
   if (!frames.length) {
@@ -55,6 +68,15 @@ function loadFrames(fileList) {
 }
 
 frameInput.addEventListener("change", () => loadFrames(frameInput.files));
+pgImageInput.addEventListener("change", () => {
+  pgFiles = [...pgImageInput.files].filter((file) => file.type.startsWith("image/"));
+  renderPgPreview();
+});
+$("clearPgImages").addEventListener("click", () => {
+  pgFiles = [];
+  pgImageInput.value = "";
+  renderPgPreview();
+});
 function savedRoomConfigs() {
   return JSON.parse(localStorage.getItem(ROOM_CONFIGS_KEY) || "{}");
 }
@@ -324,6 +346,7 @@ window.base6Tool = {
     items,
     frames,
     uploadedFiles: [...frameInput.files],
+    pgFiles,
   }),
   storageKey: ROOM_CONFIGS_KEY,
 };
