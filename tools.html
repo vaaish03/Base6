@@ -12,7 +12,7 @@
     <div>
       <a class="back-link" href="index.html">← Back to BASE6</a>
       <p class="eyebrow">Visual workspace</p>
-      <h1>360 View & Room Layout Generator</h1>
+      <h1>BASE6 Admin workspace</h1>
     </div>
     <div class="admin-actions">
       <a class="back-link" href="index.html">View public site</a>
@@ -22,11 +22,11 @@
   </header>
 
   <main class="app-grid">
-    <section class="card">
+    <section class="card image-manager-card">
       <div class="section-heading">
         <div>
-          <p class="eyebrow">Product preview</p>
-          <h2>360° viewer</h2>
+          <p class="eyebrow">Room media</p>
+          <h2>Manage room images</h2>
         </div>
         <span id="frameCount" class="badge">0 frames</span>
       </div>
@@ -51,23 +51,23 @@
         <input id="frameSlider" type="range" min="0" max="0" value="0" aria-label="360 frame">
         <button id="nextFrame" class="icon-button" type="button" aria-label="Next frame">→</button>
       </div>
-      <div class="admin-actions">
-        <button id="removeCurrentFrame" class="remove-button" type="button">Remove current 360 image</button>
-        <button id="removeSelectedRoom" class="remove-button" type="button">Remove selected room image</button>
+      <div class="admin-actions media-actions">
+        <button id="removeCurrentFrame" class="remove-button" type="button">Delete current 360 image</button>
+        <button id="removeSelectedRoom" class="remove-button" type="button">Delete room gallery image</button>
       </div>
       <label class="dropzone" for="frameInput">
-        <strong>Drop product images here</strong>
-        <span>or click to choose multiple JPG, PNG, or WebP files</span>
+        <strong>Add or update 360° images</strong>
+        <span>Choose multiple JPG, PNG, or WebP files to replace this room's 360° sequence</span>
         <input id="frameInput" type="file" accept="image/*" multiple>
       </label>
       <p class="hint">Drag on the preview to rotate. Uploaded frames are saved with this room when you publish.</p>
     </section>
 
-    <section class="card">
+    <section class="card gallery-manager-card">
       <div class="section-heading">
         <div>
           <p class="eyebrow">Residence gallery</p>
-          <h2>Add PG photos</h2>
+          <h2>Manage PG gallery</h2>
         </div>
       </div>
       <label class="dropzone" for="pgImageInput">
@@ -75,11 +75,13 @@
         <span>Add one or more JPG, PNG, or WebP photos to the public Residence gallery</span>
         <input id="pgImageInput" type="file" accept="image/*" multiple>
       </label>
+      <p class="media-label">Existing images</p>
       <div id="savedPgImagePreview" class="pg-image-preview"></div>
+      <p class="media-label">New images to add</p>
       <div id="pgImagePreview" class="pg-image-preview"></div>
       <div class="admin-actions">
         <button id="clearPgImages" class="remove-button" type="button">Clear new photos</button>
-        <button id="removeSavedPgImages" class="remove-button" type="button">Remove existing photos</button>
+        <button id="removeSavedPgImages" class="remove-button" type="button">Delete all existing photos</button>
       </div>
       <p id="pgImageStatus" class="save-status" role="status"></p>
       <p class="hint">Click Save to public site below to publish these images.</p>
@@ -109,7 +111,7 @@
           </select>
         </label>
         <button id="generateLayout" class="button secondary" type="button">Generate layout</button>
-        <button id="saveLayout" class="button primary" type="button">Save to public site</button>
+        <button id="saveLayout" class="button primary save-button" type="button">Save changes</button>
       </div>
       <div class="canvas-wrap">
         <canvas id="layoutCanvas" width="900" height="560" aria-label="Room layout canvas"></canvas>
@@ -117,7 +119,7 @@
       <div class="furniture-list" id="furnitureList"></div>
       <button id="removeFurniture" class="remove-button" type="button">Remove selected item</button>
       <p class="hint">Drag any icon on the canvas to move it. Select an item and use Remove, Delete, or Backspace to delete it.</p>
-      <p id="saveStatus" class="save-status" role="status"></p>
+      <p id="saveStatus" class="save-status" role="status" aria-live="polite"></p>
     </section>
   </main>
   <script src="app.js"></script>

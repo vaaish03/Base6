@@ -27,7 +27,6 @@ document.getElementById("saveLayout").addEventListener("click", async () => {
   const uploadedFrames = state.uploadedFiles.length
     ? await Promise.all(state.uploadedFiles.map(fileAsDataUrl))
     : state.frames;
-  const existingPgImages = JSON.parse(localStorage.getItem(ADMIN_PG_IMAGES_KEY) || "[]");
   const newPgImages = state.pgFiles.length
     ? await Promise.all(state.pgFiles.map(fileAsDataUrl))
     : [];
@@ -40,7 +39,9 @@ document.getElementById("saveLayout").addEventListener("click", async () => {
   };
   localStorage.setItem(ADMIN_ROOM_CONFIGS_KEY, JSON.stringify(configs));
   localStorage.setItem(LAYOUT_STORAGE_KEY, JSON.stringify(configs[state.roomId]));
-  const pgImages = state.pgFiles.length ? [...existingPgImages, ...newPgImages] : existingPgImages;
+  const pgImages = [...state.savedPgImages, ...newPgImages];
   localStorage.setItem(ADMIN_PG_IMAGES_KEY, JSON.stringify(pgImages));
-  document.getElementById("saveStatus").textContent = "Saved for the selected room image. The public site now uses it.";
+  const saveStatus = document.getElementById("saveStatus");
+  saveStatus.textContent = "Changes updated successfully.";
+  saveStatus.classList.add("success");
 });

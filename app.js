@@ -22,10 +22,10 @@ let frameIndex = 0;
 let dragStartX = null;
 let frameObjectUrls = [];
 let pgFiles = [];
+let savedPgImages = JSON.parse(localStorage.getItem("base6PgImages") || "[]");
 
 function renderSavedPgImages() {
-  const savedImages = JSON.parse(localStorage.getItem("base6PgImages") || "[]");
-  savedPgImagePreview.replaceChildren(...savedImages.map((src, index) => {
+  savedPgImagePreview.replaceChildren(...savedPgImages.map((src, index) => {
     const card = document.createElement("div");
     card.className = "saved-pg-image";
     const image = document.createElement("img");
@@ -36,11 +36,9 @@ function renderSavedPgImages() {
     remove.className = "remove-button";
     remove.textContent = "Remove";
     remove.addEventListener("click", () => {
-      const current = JSON.parse(localStorage.getItem("base6PgImages") || "[]");
-      current.splice(index, 1);
-      localStorage.setItem("base6PgImages", JSON.stringify(current));
+      savedPgImages.splice(index, 1);
       renderSavedPgImages();
-      pgImageStatus.textContent = "Photo removed. Save to public site to publish the change.";
+      pgImageStatus.textContent = "Photo marked for deletion. Click Save changes to publish.";
     });
     card.append(image, remove);
     return card;
@@ -117,9 +115,9 @@ $("removeSelectedRoom").addEventListener("click", () => {
   $("saveStatus").textContent = "Selected room image removed from the public gallery.";
 });
 $("removeSavedPgImages").addEventListener("click", () => {
-  localStorage.setItem("base6PgImages", "[]");
+  savedPgImages = [];
   renderSavedPgImages();
-  pgImageStatus.textContent = "Existing PG photos removed. Save to publish the change.";
+  pgImageStatus.textContent = "Existing photos marked for deletion. Click Save changes to publish.";
 });
 renderSavedPgImages();
 function savedRoomConfigs() {
@@ -392,6 +390,7 @@ window.base6Tool = {
     frames,
     uploadedFiles: [...frameInput.files],
     pgFiles,
+    savedPgImages,
   }),
   storageKey: ROOM_CONFIGS_KEY,
 };
