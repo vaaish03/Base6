@@ -51,6 +51,10 @@
         <input id="frameSlider" type="range" min="0" max="0" value="0" aria-label="360 frame">
         <button id="nextFrame" class="icon-button" type="button" aria-label="Next frame">→</button>
       </div>
+      <div class="admin-actions">
+        <button id="removeCurrentFrame" class="remove-button" type="button">Remove current 360 image</button>
+        <button id="removeSelectedRoom" class="remove-button" type="button">Remove selected room image</button>
+      </div>
       <label class="dropzone" for="frameInput">
         <strong>Drop product images here</strong>
         <span>or click to choose multiple JPG, PNG, or WebP files</span>
@@ -71,6 +75,7 @@
         <span>Add one or more JPG, PNG, or WebP photos to the public Residence gallery</span>
         <input id="pgImageInput" type="file" accept="image/*" multiple>
       </label>
+      <div id="savedPgImagePreview" class="pg-image-preview"></div>
       <div id="pgImagePreview" class="pg-image-preview"></div>
       <div class="admin-actions">
         <button id="clearPgImages" class="remove-button" type="button">Clear new photos</button>

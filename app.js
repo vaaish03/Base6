@@ -9,6 +9,7 @@ const roomTarget = $("roomTarget");
 const roomTargetImage = $("roomTargetImage");
 const pgImageInput = $("pgImageInput");
 const pgImagePreview = $("pgImagePreview");
+const savedPgImagePreview = $("savedPgImagePreview");
 const pgImageStatus = $("pgImageStatus");
 const ROOM_CONFIGS_KEY = "base6RoomLayouts";
 const roomOptions = {
@@ -21,6 +22,30 @@ let frameIndex = 0;
 let dragStartX = null;
 let frameObjectUrls = [];
 let pgFiles = [];
+
+function renderSavedPgImages() {
+  const savedImages = JSON.parse(localStorage.getItem("base6PgImages") || "[]");
+  savedPgImagePreview.replaceChildren(...savedImages.map((src, index) => {
+    const card = document.createElement("div");
+    card.className = "saved-pg-image";
+    const image = document.createElement("img");
+    image.src = src;
+    image.alt = `Saved PG photo ${index + 1}`;
+    const remove = document.createElement("button");
+    remove.type = "button";
+    remove.className = "remove-button";
+    remove.textContent = "Remove";
+    remove.addEventListener("click", () => {
+      const current = JSON.parse(localStorage.getItem("base6PgImages") || "[]");
+      current.splice(index, 1);
+      localStorage.setItem("base6PgImages", JSON.stringify(current));
+      renderSavedPgImages();
+      pgImageStatus.textContent = "Photo removed. Save to public site to publish the change.";
+    });
+    card.append(image, remove);
+    return card;
+  }));
+}
 
 function renderPgPreview() {
   pgImagePreview.replaceChildren(...pgFiles.map((file) => {
@@ -78,10 +103,25 @@ $("clearPgImages").addEventListener("click", () => {
   pgImageInput.value = "";
   renderPgPreview();
 });
+$("removeCurrentFrame").addEventListener("click", () => {
+  if (!frames.length) return;
+  frames.splice(frameIndex, 1);
+  frameIndex = Math.max(0, frameIndex - 1);
+  renderFrame(frameIndex);
+  $("saveStatus").textContent = "360 image removed. Click Save to public site to publish the change.";
+});
+$("removeSelectedRoom").addEventListener("click", () => {
+  const removed = JSON.parse(localStorage.getItem("base6RemovedRooms") || "[]");
+  if (!removed.includes(roomTarget.value)) removed.push(roomTarget.value);
+  localStorage.setItem("base6RemovedRooms", JSON.stringify(removed));
+  $("saveStatus").textContent = "Selected room image removed from the public gallery.";
+});
 $("removeSavedPgImages").addEventListener("click", () => {
-  localStorage.removeItem("base6PgImages");
+  localStorage.setItem("base6PgImages", "[]");
+  renderSavedPgImages();
   pgImageStatus.textContent = "Existing PG photos removed. Save to publish the change.";
 });
+renderSavedPgImages();
 function savedRoomConfigs() {
   return JSON.parse(localStorage.getItem(ROOM_CONFIGS_KEY) || "{}");
 }
