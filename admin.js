@@ -30,15 +30,21 @@ document.getElementById("saveLayout").addEventListener("click", async () => {
   const newPgImages = state.pgFiles.length
     ? await Promise.all(state.pgFiles.map(fileAsDataUrl))
     : [];
-  configs[state.roomId] = {
-    roomSize: state.roomSize,
-    roomStyle: state.roomStyle,
-    items: state.items,
-    frames: uploadedFrames,
-    savedAt: new Date().toISOString(),
-  };
-  localStorage.setItem(ADMIN_ROOM_CONFIGS_KEY, JSON.stringify(configs));
-  localStorage.setItem(LAYOUT_STORAGE_KEY, JSON.stringify(configs[state.roomId]));
+  if (state.roomDeleted) {
+    delete configs[state.roomId];
+    localStorage.setItem(ADMIN_ROOM_CONFIGS_KEY, JSON.stringify(configs));
+    localStorage.removeItem(LAYOUT_STORAGE_KEY);
+  } else {
+    configs[state.roomId] = {
+      roomSize: state.roomSize,
+      roomStyle: state.roomStyle,
+      items: state.items,
+      frames: uploadedFrames,
+      savedAt: new Date().toISOString(),
+    };
+    localStorage.setItem(ADMIN_ROOM_CONFIGS_KEY, JSON.stringify(configs));
+    localStorage.setItem(LAYOUT_STORAGE_KEY, JSON.stringify(configs[state.roomId]));
+  }
   const pgImages = [...state.savedPgImages, ...newPgImages];
   localStorage.setItem(ADMIN_PG_IMAGES_KEY, JSON.stringify(pgImages));
   const saveStatus = document.getElementById("saveStatus");

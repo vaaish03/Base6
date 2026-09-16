@@ -114,6 +114,19 @@ $("removeSelectedRoom").addEventListener("click", () => {
   localStorage.setItem("base6RemovedRooms", JSON.stringify(removed));
   $("saveStatus").textContent = "Selected room image removed from the public gallery.";
 });
+$("deleteRoom").addEventListener("click", () => {
+  const roomId = roomTarget.value;
+  const configs = savedRoomConfigs();
+  delete configs[roomId];
+  localStorage.setItem(ROOM_CONFIGS_KEY, JSON.stringify(configs));
+  if (localStorage.getItem("base6RoomLayout")) {
+    localStorage.removeItem("base6RoomLayout");
+  }
+  const removed = JSON.parse(localStorage.getItem("base6RemovedRooms") || "[]");
+  if (!removed.includes(roomId)) removed.push(roomId);
+  localStorage.setItem("base6RemovedRooms", JSON.stringify(removed));
+  $("saveStatus").textContent = "Room marked for deletion. Click Save changes to publish.";
+});
 $("removeSavedPgImages").addEventListener("click", () => {
   savedPgImages = [];
   renderSavedPgImages();
@@ -391,6 +404,7 @@ window.base6Tool = {
     uploadedFiles: [...frameInput.files],
     pgFiles,
     savedPgImages,
+    roomDeleted: JSON.parse(localStorage.getItem("base6RemovedRooms") || "[]").includes(roomTarget.value),
   }),
   storageKey: ROOM_CONFIGS_KEY,
 };
