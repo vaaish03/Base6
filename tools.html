@@ -72,7 +72,11 @@
         <input id="pgImageInput" type="file" accept="image/*" multiple>
       </label>
       <div id="pgImagePreview" class="pg-image-preview"></div>
-      <button id="clearPgImages" class="remove-button" type="button">Clear selected PG photos</button>
+      <div class="admin-actions">
+        <button id="clearPgImages" class="remove-button" type="button">Clear new photos</button>
+        <button id="removeSavedPgImages" class="remove-button" type="button">Remove existing photos</button>
+      </div>
+      <p id="pgImageStatus" class="save-status" role="status"></p>
       <p class="hint">Click Save to public site below to publish these images.</p>
     </section>
 

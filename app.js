@@ -9,6 +9,7 @@ const roomTarget = $("roomTarget");
 const roomTargetImage = $("roomTargetImage");
 const pgImageInput = $("pgImageInput");
 const pgImagePreview = $("pgImagePreview");
+const pgImageStatus = $("pgImageStatus");
 const ROOM_CONFIGS_KEY = "base6RoomLayouts";
 const roomOptions = {
   "room-wide": { image: "assets/base6-room-wide.jpeg" },
@@ -76,6 +77,10 @@ $("clearPgImages").addEventListener("click", () => {
   pgFiles = [];
   pgImageInput.value = "";
   renderPgPreview();
+});
+$("removeSavedPgImages").addEventListener("click", () => {
+  localStorage.removeItem("base6PgImages");
+  pgImageStatus.textContent = "Existing PG photos removed. Save to publish the change.";
 });
 function savedRoomConfigs() {
   return JSON.parse(localStorage.getItem(ROOM_CONFIGS_KEY) || "{}");

@@ -40,6 +40,7 @@ document.getElementById("saveLayout").addEventListener("click", async () => {
   };
   localStorage.setItem(ADMIN_ROOM_CONFIGS_KEY, JSON.stringify(configs));
   localStorage.setItem(LAYOUT_STORAGE_KEY, JSON.stringify(configs[state.roomId]));
-  localStorage.setItem(ADMIN_PG_IMAGES_KEY, JSON.stringify([...existingPgImages, ...newPgImages]));
+  const pgImages = state.pgFiles.length ? [...existingPgImages, ...newPgImages] : existingPgImages;
+  localStorage.setItem(ADMIN_PG_IMAGES_KEY, JSON.stringify(pgImages));
   document.getElementById("saveStatus").textContent = "Saved for the selected room image. The public site now uses it.";
 });
