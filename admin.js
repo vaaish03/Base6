@@ -50,4 +50,5 @@ document.getElementById("saveLayout").addEventListener("click", async () => {
   const saveStatus = document.getElementById("saveStatus");
   saveStatus.textContent = "Changes updated successfully.";
   saveStatus.classList.add("success");
+  window.base6Tool.clearDirtyState();
 });

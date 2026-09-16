@@ -23,6 +23,13 @@ let dragStartX = null;
 let frameObjectUrls = [];
 let pgFiles = [];
 let savedPgImages = JSON.parse(localStorage.getItem("base6PgImages") || "[]");
+const selectedPgImages = new Set();
+
+function markUnsavedChanges() {
+  $("saveLayout").classList.add("is-dirty");
+  $("saveStatus").textContent = "Unsaved changes";
+  $("saveStatus").classList.remove("success");
+}
 
 function renderSavedPgImages() {
   savedPgImagePreview.replaceChildren(...savedPgImages.map((src, index) => {
@@ -31,14 +38,28 @@ function renderSavedPgImages() {
     const image = document.createElement("img");
     image.src = src;
     image.alt = `Saved PG photo ${index + 1}`;
+    image.addEventListener("click", () => {
+      if (selectedPgImages.has(index)) {
+        selectedPgImages.delete(index);
+      } else {
+        selectedPgImages.add(index);
+      }
+      card.classList.toggle("selected", selectedPgImages.has(index));
+      pgImageStatus.textContent = selectedPgImages.size
+        ? `${selectedPgImages.size} image${selectedPgImages.size === 1 ? "" : "s"} marked for deletion. Click Save changes to publish.`
+        : "Image deletion cancelled.";
+      markUnsavedChanges();
+    });
     const remove = document.createElement("button");
     remove.type = "button";
     remove.className = "remove-button";
     remove.textContent = "Remove";
     remove.addEventListener("click", () => {
       savedPgImages.splice(index, 1);
+      selectedPgImages.clear();
       renderSavedPgImages();
       pgImageStatus.textContent = "Photo marked for deletion. Click Save changes to publish.";
+      markUnsavedChanges();
     });
     card.append(image, remove);
     return card;
@@ -91,28 +112,33 @@ function loadFrames(fileList) {
   renderFrame(0);
 }
 
-frameInput.addEventListener("change", () => loadFrames(frameInput.files));
+frameInput.addEventListener("change", () => {
+  loadFrames(frameInput.files);
+  markUnsavedChanges();
+});
 pgImageInput.addEventListener("change", () => {
   pgFiles = [...pgImageInput.files].filter((file) => file.type.startsWith("image/"));
   renderPgPreview();
+  markUnsavedChanges();
 });
 $("clearPgImages").addEventListener("click", () => {
   pgFiles = [];
   pgImageInput.value = "";
   renderPgPreview();
+  markUnsavedChanges();
 });
 $("removeCurrentFrame").addEventListener("click", () => {
   if (!frames.length) return;
   frames.splice(frameIndex, 1);
   frameIndex = Math.max(0, frameIndex - 1);
   renderFrame(frameIndex);
-  $("saveStatus").textContent = "360 image removed. Click Save to public site to publish the change.";
+  markUnsavedChanges();
 });
 $("removeSelectedRoom").addEventListener("click", () => {
   const removed = JSON.parse(localStorage.getItem("base6RemovedRooms") || "[]");
   if (!removed.includes(roomTarget.value)) removed.push(roomTarget.value);
   localStorage.setItem("base6RemovedRooms", JSON.stringify(removed));
-  $("saveStatus").textContent = "Selected room image removed from the public gallery.";
+  markUnsavedChanges();
 });
 $("deleteRoom").addEventListener("click", () => {
   const roomId = roomTarget.value;
@@ -125,12 +151,14 @@ $("deleteRoom").addEventListener("click", () => {
   const removed = JSON.parse(localStorage.getItem("base6RemovedRooms") || "[]");
   if (!removed.includes(roomId)) removed.push(roomId);
   localStorage.setItem("base6RemovedRooms", JSON.stringify(removed));
-  $("saveStatus").textContent = "Room marked for deletion. Click Save changes to publish.";
+  markUnsavedChanges();
 });
 $("removeSavedPgImages").addEventListener("click", () => {
   savedPgImages = [];
+  selectedPgImages.clear();
   renderSavedPgImages();
   pgImageStatus.textContent = "Existing photos marked for deletion. Click Save changes to publish.";
+  markUnsavedChanges();
 });
 renderSavedPgImages();
 function savedRoomConfigs() {
@@ -363,10 +391,16 @@ furniture.forEach((item) => {
   const button = document.createElement("button");
   button.type = "button";
   button.textContent = `+ ${item.label}`;
-  button.addEventListener("click", () => addFurniture(item.type));
+  button.addEventListener("click", () => {
+    addFurniture(item.type);
+    markUnsavedChanges();
+  });
   $("furnitureList").appendChild(button);
 });
-$("removeFurniture").addEventListener("click", removeSelected);
+$("removeFurniture").addEventListener("click", () => {
+  removeSelected();
+  markUnsavedChanges();
+});
 window.addEventListener("keydown", (event) => {
   if ((event.key === "Delete" || event.key === "Backspace") && selected) {
     event.preventDefault();
@@ -376,9 +410,14 @@ window.addEventListener("keydown", (event) => {
 $("roomSize").addEventListener("change", (event) => {
   room = { small: { width: 12, height: 10 }, medium: { width: 16, height: 12 }, large: { width: 20, height: 16 } }[event.target.value];
   randomLayout();
+  markUnsavedChanges();
 });
 $("roomStyle").addEventListener("change", drawLayout);
-$("generateLayout").addEventListener("click", randomLayout);
+$("roomStyle").addEventListener("change", markUnsavedChanges);
+$("generateLayout").addEventListener("click", () => {
+  randomLayout();
+  markUnsavedChanges();
+});
 $("clearAll").addEventListener("click", () => {
   loadFrames([roomOptions[roomTarget.value].image]);
   frameInput.value = "";
@@ -403,8 +442,13 @@ window.base6Tool = {
     frames,
     uploadedFiles: [...frameInput.files],
     pgFiles,
-    savedPgImages,
+    savedPgImages: savedPgImages.filter((_, index) => !selectedPgImages.has(index)),
     roomDeleted: JSON.parse(localStorage.getItem("base6RemovedRooms") || "[]").includes(roomTarget.value),
   }),
+  clearDirtyState: () => {
+    selectedPgImages.clear();
+    renderSavedPgImages();
+    $("saveLayout").classList.remove("is-dirty");
+  },
   storageKey: ROOM_CONFIGS_KEY,
 };
