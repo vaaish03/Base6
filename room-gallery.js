@@ -1,6 +1,6 @@
 const roomDetails = {
   "room-wide": {
-    title: "Room 1 · Twin residence",
+    title: "Room 1 · 3BHK flat",
     frames: ["assets/base6-room-wide.jpeg", "assets/base6-room-twin.jpeg", "assets/base6-room-wide.jpeg"],
     note: "Twin beds with two dedicated study zones and generous daylight.",
     items: [
@@ -13,7 +13,7 @@ const roomDetails = {
     ],
   },
   "room-twin": {
-    title: "Room 2 · Balcony twin",
+    title: "Room 2 · 3BHK flat",
     frames: ["assets/base6-room-twin.jpeg", "assets/base6-room-wide.jpeg"],
     note: "A quieter twin setup with wardrobe storage and balcony access.",
     items: [
@@ -26,7 +26,7 @@ const roomDetails = {
     ],
   },
   "room-study": {
-    title: "Room 3 · Study-focused room",
+    title: "Room 3 · 3BHK flat",
     frames: ["assets/base6-room-wide.jpeg", "assets/base6-room-twin.jpeg"],
     note: "An arrangement that keeps the shared study surface at the centre.",
     items: [

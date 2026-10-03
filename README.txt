@@ -1,7 +1,7 @@
-BASE6 Website
+BASE6 Girls PG Website
 ==============
 
-A responsive static portfolio/marketing website for BASE6 Engineering Residence.
+A responsive static portfolio/marketing website for BASE6 girls-only PG accommodation in one 3BHK flat. Room prices vary based on the room and its attached or common washroom arrangement.
 
 Included:
 - index.html
